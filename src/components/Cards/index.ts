@@ -1,4 +1,5 @@
 import {BasicComponent, ClassTypes, ColorVariants, TagTypes, TextVariants} from "../../types";
+import {ImgHTMLAttributes} from "react";
 
 export interface CardProps extends BasicComponent {
     align?: string;
@@ -79,9 +80,7 @@ export interface CardHeaderProps extends BasicComponent {
     textVariant?: TextVariants | ColorVariants;
 }
 
-export interface CardImgProps extends BasicComponent {
-    src?: string;
-    alt?: string;
+export interface CardImgProps extends ImgHTMLAttributes<any> {
     overlay?: boolean;
     bottom?: boolean;
     end?: boolean;
@@ -89,6 +88,8 @@ export interface CardImgProps extends BasicComponent {
     right?: boolean;
     start?: boolean;
     top?: boolean;
+    children?: any;
+    className?: string;
 }
 
 export interface CardLinkProps extends BasicComponent {
@@ -96,7 +97,7 @@ export interface CardLinkProps extends BasicComponent {
 }
 
 export interface CardSubTitleProps extends BasicComponent {
-    title?: string;
+    title?: string | null;
     textVariant?: TextVariants | ColorVariants;
 }
 
