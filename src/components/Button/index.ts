@@ -1,9 +1,9 @@
-import {BasicComponent, ButtonSizes, ButtonTypes, ColorVariants} from "../index";
+import {BasicComponent, ButtonSizes, ButtonTypes, ColorVariants} from "../../types";
 
 export interface ButtonProps extends BasicComponent {
-    href?: string;
+    href?: string | null;
     variant?: ColorVariants | string;
-    size?: ButtonSizes;
+    size?: ButtonSizes | null;
     type?: ButtonTypes;
     outline?: boolean;
     block?: boolean;
@@ -19,15 +19,15 @@ export interface ButtonProps extends BasicComponent {
 }
 
 export interface ButtonCloseProps extends BasicComponent {
-    size?: ButtonSizes;
+    size?: ButtonSizes | null;
     white?: boolean;
     ariaLabel?: string;
     disabled?: boolean;
 }
 
 export interface ButtonGroupProps extends BasicComponent {
-    ariaLabel?: string;
-    size?: ButtonSizes;
+    ariaLabel?: string | null;
+    size?: ButtonSizes | null;
     vertical?: boolean;
     justified?: boolean;
     role?: string;
@@ -36,4 +36,5 @@ export interface ButtonGroupProps extends BasicComponent {
 export interface ButtonToolbarProps extends BasicComponent {
     role?: string;
     justified?: boolean;
+    keyNav?: boolean;
 }

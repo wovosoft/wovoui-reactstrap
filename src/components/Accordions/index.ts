@@ -1,4 +1,4 @@
-import {BasicComponent} from "../index";
+import {BasicComponent} from "../../types";
 
 export interface AccordionProps extends BasicComponent {
     flush?: boolean;

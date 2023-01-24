@@ -1,3 +1,5 @@
+import {HTMLAttributes} from "react";
+
 export type TextAlign = 'start' | 'center' | 'end';
 export type TextVariants =
     'muted'
@@ -64,3 +66,13 @@ export type DropdownAlignments =
     | "xxl-end";
 
 export type ButtonTypes = "button" | "submit";
+
+export type ClassTypes = object | string | object[] | string[] | null | undefined;
+export type TagTypes = keyof HTMLElementTagNameMap | string;
+
+// export interface BasicComponent extends HTMLAttributes<any> {
+export interface BasicComponent {
+    children?: any;
+    tag?: keyof HTMLElementTagNameMap | string;
+    className?: string;
+}

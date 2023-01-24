@@ -2,6 +2,7 @@ import Container from "../components/Layout/Container";
 import Button from "../components/Button/Button";
 import ButtonGroup from "../components/Button/ButtonGroup";
 import ButtonClose from "../components/Button/ButtonClose";
+import ButtonToolbar from "../components/Button/ButtonToolbar";
 
 export default function Buttons() {
     return <Container>
@@ -63,5 +64,22 @@ export default function Buttons() {
         </ButtonGroup>
         <h4>Button Close</h4>
         <ButtonClose/>
+
+        <h4>Button Toolbar</h4>
+        <ButtonToolbar keyNav aria-label="Toolbar with button groups">
+            <ButtonGroup>
+                <Button>&laquo;</Button>
+                <Button>&lsaquo;</Button>
+            </ButtonGroup>
+            <ButtonGroup className="mx-2">
+                <Button>Edit</Button>
+                <Button>Undo</Button>
+                <Button>Redo</Button>
+            </ButtonGroup>
+            <ButtonGroup>
+                <Button>&rsaquo;</Button>
+                <Button>&raquo;</Button>
+            </ButtonGroup>
+        </ButtonToolbar>
     </Container>
 }

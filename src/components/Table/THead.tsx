@@ -1,5 +1,5 @@
-import {generateTableAttrs, TrProps} from "./index";
+import {generateTableAttrs, THeadProps} from "./index";
 
-export default function Tr(props: TrProps) {
-    return <tr {...generateTableAttrs(props)}>{props.children}</tr>;
+export default function THead(props: THeadProps) {
+    return <thead {...generateTableAttrs(props)}>{props.children}</thead>;
 }

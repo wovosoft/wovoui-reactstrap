@@ -1,31 +1,23 @@
-import type {
-    ResponsiveSizes
-} from "../../types";
 import {toClasses} from "../../helpers";
+import type {ContainerProps} from "./index";
 
-export type ContainerProps = {
-    tag?: keyof HTMLElementTagNameMap;
-    fluid?: boolean;
-    size?: ResponsiveSizes | null;
-    children?: any;
-}
-
-export default function Container(props: ContainerProps) {
-    const {
+export default function Container(
+    {
         tag = "div",
         fluid = false,
-        size = null
-    } = props;
-
+        size = null,
+        children = null,
+        ...props
+    }: ContainerProps
+) {
     const attrs = {
-        className: toClasses({
+        ...props,
+        className: toClasses([props.className, {
             "container": !(fluid || size),
             "container-fluid": fluid && !size,
             ["container-" + size]: size && !fluid
-        })
-    }
-    const TheTag = tag;
-    return <TheTag {...attrs}>
-        {props.children}
-    </TheTag>
+        }])
+    };
+
+    return <div {...attrs}>{children}</div>;
 }

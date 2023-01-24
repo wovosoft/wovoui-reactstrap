@@ -1,34 +1,8 @@
-import type {
-    ButtonSizes,
-    ButtonTypes,
-    ColorVariants
-} from "../../types";
-
 import {toClasses} from "../../helpers";
+import {ButtonProps} from "./index";
 
-type ButtonProps = {
-    tag?: string;
-    href?: string;
-    variant?: ColorVariants | string;
-    size?: ButtonSizes;
-    type?: ButtonTypes;
-    outline?: boolean;
-    block?: boolean;
-    pill?: boolean;
-    squared?: boolean;
-    disabled?: boolean;
-    pressed?: boolean | null;
-    noWrap?: boolean;
-    link?: boolean;
-    active?: boolean;
-    activeClass?: string;
-    noStyle?: boolean;
-    children?: any;
-};
-
-
-export default function Button(props: ButtonProps) {
-    const {
+export default function Button(
+    {
         tag = "button",
         href = null,
         variant = 'secondary',
@@ -45,9 +19,14 @@ export default function Button(props: ButtonProps) {
         active = false,
         activeClass = "active",
         noStyle = false,
-    } = props;
+        children = null,
+        ...props
+    }: ButtonProps
+) {
+
 
     let attrs = {
+        ...props,
         className: toClasses(!noStyle ? ["btn", {
             disabled: disabled && tag === "a",
             ["btn-" + (outline ? "outline-" : "") + variant]: !!variant,
@@ -60,7 +39,5 @@ export default function Button(props: ButtonProps) {
         }] : [])
     };
 
-    return <button  {...attrs}>
-        {props.children}
-    </button>
+    return <button {...attrs}>{children}</button>;
 }

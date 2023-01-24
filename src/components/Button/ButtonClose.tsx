@@ -1,23 +1,19 @@
-import {ButtonSizes} from "../../types";
 import {toClasses} from "../../helpers";
+import {ButtonCloseProps} from "./index";
 
-export type ButtonCloseProps = {
-    size?: ButtonSizes;
-    white?: boolean;
-    ariaLabel?: string;
-    disabled?: boolean;
-    children?: any;
-}
-
-export default function ButtonClose(props: ButtonCloseProps) {
-    const {
+export default function ButtonClose(
+    {
         size = null,
         white = false,
         ariaLabel = "Close",
-        disabled = false
-    } = props;
+        disabled = false,
+        children = null,
+        ...props
+    }: ButtonCloseProps
+) {
 
     const attrs = {
+        ...props,
         type: "button",
         disabled: disabled,
         "aria-label": ariaLabel,
@@ -30,8 +26,7 @@ export default function ButtonClose(props: ButtonCloseProps) {
         ])
     };
 
+
     // @ts-ignore
-    return <button {...attrs}>
-        {props.children}
-    </button>
+    return <button {...attrs}>{children}</button>
 }
