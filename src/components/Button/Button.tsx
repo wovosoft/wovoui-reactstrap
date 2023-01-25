@@ -19,24 +19,28 @@ export default function Button(
         active = false,
         activeClass = "active",
         noStyle = false,
-        children = null,
+        className,
+        children,
         ...props
     }: ButtonProps
 ) {
-
-
     let attrs = {
         ...props,
-        className: toClasses(!noStyle ? ["btn", {
-            disabled: disabled && tag === "a",
-            ["btn-" + (outline ? "outline-" : "") + variant]: !!variant,
-            ["btn-" + size]: !!size,
-            "w-100": block,
-            "rounded-pill": pill,
-            "rounded-0": squared,
-            [activeClass]: pressed || active,
-            "text-nowrap": noWrap,
-        }] : [])
+        type,
+        className: toClasses(!noStyle ? [
+            "btn",
+            className,
+            {
+                disabled: disabled && tag === "a",
+                ["btn-" + (outline ? "outline-" : "") + variant]: !!variant,
+                ["btn-" + size]: !!size,
+                "w-100": block,
+                "rounded-pill": pill,
+                "rounded-0": squared,
+                [activeClass]: pressed || active,
+                "text-nowrap": noWrap,
+            }
+        ] : [])
     };
 
     return <button {...attrs}>{children}</button>;

@@ -5,10 +5,10 @@ export interface AlertProps extends BasicComponent {
     dismissible?: boolean;
     timeout?: number;
     timeoutStep?: number;
-    show?: boolean;
     closeBtnWhite?: boolean;
-    icon?: string;
-    heading?: string;
+    icon?: string | null;
+    heading?: string | null;
+    // lazy?: boolean | null;
 }
 
 export interface AlertHeadingProps extends BasicComponent {
@@ -17,4 +17,10 @@ export interface AlertHeadingProps extends BasicComponent {
 
 export interface AlertLinkProps extends BasicComponent {
     href?: string;
+}
+
+export interface AlertActions {
+    show: () => any;
+    hide: () => any,
+    toggle: () => any
 }

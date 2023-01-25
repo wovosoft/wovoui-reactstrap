@@ -21,7 +21,8 @@ export function toClasses(classes: any): string {
             out.push(toClasses(classes[x]))
         }
     }
-    return out.filter(i => !!i).join(" ");
+    //removes duplicate
+    return Array.from(new Set(out)).filter(i => !!i).join(" ");
 }
 
 export function withDefaults<T>(defaults: T): T {
@@ -34,20 +35,23 @@ export const colorVariants: ColorVariants[] = [
     'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'
 ];
 export type VariantProp = {
-    bg?: ColorVariants;
-    border?: ColorVariants;
+    bg?: ColorVariants | null;
+    variant?: ColorVariants | null;
+    border?: ColorVariants | null;
     //both plain text variants and color variants are included
     //@link https://getbootstrap.com/docs/5.2/utilities/colors/#colors
-    text?: TextVariants | ColorVariants;
+    text?: TextVariants | ColorVariants | null;
     placeholderGlow?: boolean;
     placeholderWave?: boolean;
-    placeholderAnimation?: 'glow' | 'wave';
-    placeholderSize?: PlaceholderSizes;
-    col?: ResponsiveNumbers;
+    placeholderAnimation?: 'glow' | 'wave' | null;
+    placeholderSize?: PlaceholderSizes | null;
+    col?: ResponsiveNumbers | null;
     accordionFlush?: boolean;
 }
 export const getBinaryClasses = (types: VariantProp = {}) => ({
     ["bg-" + types.bg]: !!types.bg,
+    ["text-bg-" + types.variant]: !!types.variant,
+
     ["border-" + types.border]: !!types.border,
     ["text-" + types.text]: !!types.text,
     "placeholder-glow": !!types.placeholderGlow,
@@ -57,3 +61,26 @@ export const getBinaryClasses = (types: VariantProp = {}) => ({
     ["col-" + types.col]: !!types.col,
     'accordion-flush': !!types.accordionFlush
 });
+
+import {useEffect, useRef} from 'react'
+
+export function useTimeout(callback: Function, delay: number) {
+    const savedCallback = useRef(callback)
+
+    // Remember the latest callback if it changes.
+    useEffect(() => {
+        savedCallback.current = callback
+    }, [callback])
+
+    // Set up the timeout.
+    useEffect(() => {
+        // Don't schedule if no delay is specified.
+        if (delay === null) {
+            return
+        }
+
+        const id = setTimeout(() => savedCallback.current(), delay)
+
+        return () => clearTimeout(id)
+    }, [delay])
+}

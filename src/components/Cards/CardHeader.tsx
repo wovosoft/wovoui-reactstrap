@@ -1,26 +1,30 @@
-import {defineComponent, h} from "vue";
-import {makeString, makeTag, makeTextVariant, makeVariant} from "../../composables/useProps";
-import {getBinaryClasses} from "../../composables/useClasses";
+import {CardHeaderProps} from "./index";
+import {getBinaryClasses, toClasses} from "../../helpers";
 
-export default defineComponent({
-    name: "CardHeader",
-    props: {
-        tag: makeTag("div"),
-        content: makeString(),
-        variant: makeVariant(null),
-        borderVariant: makeVariant(null),
-        textVariant: makeTextVariant(null)
-    },
-    setup(props, {slots}) {
-        return () => h(props.tag, {
-            class: [
-                "card-header",
-                getBinaryClasses({
-                    bg: props.variant,
-                    text: props.textVariant,
-                    border: props.borderVariant
-                })
-            ]
-        }, slots?.default?.());
-    }
-})
+export default function CardHeader(
+    {
+        tag = "div",
+        content = null,
+        variant = null,
+        borderVariant = null,
+        textVariant = null,
+        children,
+        className,
+        ...props
+    }: CardHeaderProps
+) {
+    const attrs = {
+        ...props,
+        className: toClasses([
+            "card-header",
+            className,
+            getBinaryClasses({
+                bg: variant,
+                text: textVariant,
+                border: borderVariant
+            })
+        ])
+    };
+
+    return (<div {...attrs}>{children}</div>);
+}

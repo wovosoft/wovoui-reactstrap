@@ -1,71 +1,49 @@
 import {BasicComponent, ClassTypes, ColorVariants, TagTypes, TextVariants} from "../../types";
 import {ImgHTMLAttributes} from "react";
 
-export interface CardProps extends BasicComponent {
-    align?: string;
-    bgVariant?: ColorVariants;
-    bodyBgVariant?: ColorVariants;
-    bodyBorderVariant?: ColorVariants;
-    bodyClass?: ClassTypes;
-    bodyTag?: keyof HTMLElementTagNameMap | string;
-    bodyTextVariant?: ColorVariants;
+type BasicVariants = {
+    variant?: ColorVariants | null;
+    bgVariant?: ColorVariants | null;
+    textVariant?: ColorVariants | TextVariants | null;
+    borderVariant?: ColorVariants | null;
+}
 
-    footer?: string;
-    footerBgVariant?: ColorVariants;
-    footerTag?: keyof HTMLElementTagNameMap | string;
-    footerTextVariant?: ColorVariants;
-    footerClass?: ClassTypes;
-    footerBorderVariant?: ColorVariants;
-
-    header?: string;
-    headerBgVariant?: ColorVariants;
-    headerBorderVariant?: ColorVariants;
-    headerClass?: ClassTypes;
-    headerTag?: TagTypes;
-    headerTextVariant?: ColorVariants;
-
-    imgAlt?: string;
-    imgBottom?: boolean;
-    imgEnd?: boolean;
-    imgLeft?: boolean;
-    imgRight?: boolean;
-    imgStart?: boolean;
-    imgTop?: boolean;
-    imgSrc?: string;
-    imgWidth?: string;
-    imgHeight?: string;
+export interface CardProps extends BasicComponent, BasicVariants {
+    /**
+     * Card Props
+     */
+    align?: string | null;
+    //has Basic Variants
     noBody?: boolean;
 
+    /**
+     * Card Body Props
+     */
+    body?: CardBodyProps | null | string;
+
+    /**
+     * Because it overrides HTML title attributes,
+     * it is renamed from title to cardTitle
+     */
+    cardTitle?: CardTitleProps | null;
+    subTitle?: CardSubTitleProps | null;
+    header?: CardHeaderProps | null | string;
+    footer?: CardFooterProps | null | string;
+
     overlay?: boolean;
-    subTitle?: string;
-    subTitleTag?: string;
-    subTitleTextVariant?: ColorVariants;
-
-
-    textVariant?: ColorVariants;
-    borderVariant?: ColorVariants;
-    title?: string;
-    titleTag?: TagTypes;
+    img?: CardImgProps | null;
 }
 
-export interface CardBodyProps extends BasicComponent {
-    content?: string;
-    variant?: ColorVariants;
-    borderVariant?: ColorVariants;
-    textVariant?: ColorVariants;
+
+export interface CardBodyProps extends BasicComponent, BasicVariants {
+    content?: string | null;
     overlay?: boolean;
-    subTitle?: string;
-    subTitleTag?: TagTypes;
-    subTitleTextVariant?: ColorVariants;
-    title?: string;
-    titleTag?: TagTypes;
+    subTitle?: CardSubTitleProps | null;
+    cardTitle?: CardTitleProps | null;
 }
 
-export interface CardFooterProps extends BasicComponent {
-    content?: string;
-    variant?: ColorVariants;
-    borderVariant?: ColorVariants;
-    textVariant?: TextVariants | ColorVariants;
+export interface CardFooterProps extends BasicComponent, BasicVariants {
+    content?: string | null;
 }
 
 export interface CardGroupProps extends BasicComponent {
@@ -73,11 +51,8 @@ export interface CardGroupProps extends BasicComponent {
     columns?: boolean;
 }
 
-export interface CardHeaderProps extends BasicComponent {
-    content?: string;
-    variant?: ColorVariants;
-    borderVariant?: ColorVariants;
-    textVariant?: TextVariants | ColorVariants;
+export interface CardHeaderProps extends BasicComponent, BasicVariants {
+    content?: string | null;
 }
 
 export interface CardImgProps extends ImgHTMLAttributes<any> {
@@ -96,9 +71,8 @@ export interface CardLinkProps extends BasicComponent {
     href?: string;
 }
 
-export interface CardSubTitleProps extends BasicComponent {
-    title?: string | null;
-    textVariant?: TextVariants | ColorVariants;
+export interface CardSubTitleProps extends BasicComponent, BasicVariants {
+
 }
 
 export interface CardTextProps extends BasicComponent {
@@ -106,5 +80,5 @@ export interface CardTextProps extends BasicComponent {
 }
 
 export interface CardTitleProps extends BasicComponent {
-    content?: string;
+
 }

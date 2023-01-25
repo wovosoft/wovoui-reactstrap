@@ -1,10 +1,9 @@
-import {BasicComponent, ButtonSizes, ButtonTypes, ColorVariants} from "../../types";
+import {BasicComponent, ButtonSizes, ColorVariants} from "../../types";
 
 export interface ButtonProps extends BasicComponent {
     href?: string | null;
     variant?: ColorVariants | string;
     size?: ButtonSizes | null;
-    type?: ButtonTypes;
     outline?: boolean;
     block?: boolean;
     pill?: boolean;

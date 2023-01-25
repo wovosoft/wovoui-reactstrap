@@ -1,53 +1,64 @@
-import {defineComponent, h} from "vue";
-import {CardTitle, CardSubTitle} from "../..";
+import {CardBodyProps} from "./index";
+import {getBinaryClasses, toClasses} from "../../helpers";
+import CardTitle from "./CardTitle";
+import CardSubTitle from "./CardSubTitle";
+import {isValidElement} from "react";
 
-import {makeBoolean, makeString, makeTag, makeTextVariant, makeVariant} from "../../composables/useProps";
-import {getBinaryClasses} from "../../composables/useClasses";
-
-export default defineComponent({
-    name: "CardBody",
-    props: {
-        tag: makeTag("div"),
-        content: makeString(null),
-        variant: makeVariant(null),
-        borderVariant: makeVariant(null),
-        textVariant: makeTextVariant(null),
-        overlay: makeBoolean(false),
-        subTitle: makeString(),
-        subTitleTag: makeTag("h6"),
-        subTitleTextVariant: makeTextVariant("muted"),
-        title: makeString(),
-        titleTag: makeTag("h4")
-    },
-    setup(props, {slots}) {
-        const title = () => (slots.title || props.title) ? h(CardTitle, {
-            tag: props.titleTag,
-            content: props.title,
-        }, slots.title?.() || (() => props.title)) : null;
-
-        const subTitle = () => (props.subTitle || slots.subTitle) ? h(CardSubTitle, {
-            tag: props.subTitleTag,
-            textVariant: props.subTitleTextVariant
-        }, slots.subTitle?.() || (() => props.subTitle)) : null;
-
-        return () => h(props.tag, {
-                class: [
-                    {
-                        "card-body": !props.overlay,
-                        "card-img-overlay": props.overlay,
-                    },
-                    getBinaryClasses({
-                        bg: props.variant,
-                        text: props.textVariant,
-                        border: props.borderVariant
-                    })
-                ]
+export default function CardBody(
+    {
+        tag = "div",
+        content = null,
+        variant = null,
+        borderVariant = null,
+        textVariant = null,
+        overlay = false,
+        cardTitle = {
+            tag: 'h4'
+        },
+        subTitle = {
+            tag: "h6",
+            textVariant: "muted",
+        },
+        className,
+        children,
+        ...props
+    }: CardBodyProps
+) {
+    const attrs = {
+        ...props,
+        className: toClasses([
+            className,
+            {
+                "card-body": !overlay,
+                "card-img-overlay": overlay,
             },
-            [
-                title(),
-                subTitle(),
-                slots?.default?.()
-            ]
-        )
+            getBinaryClasses({
+                bg: variant,
+                text: textVariant,
+                border: borderVariant
+            })
+        ])
+    };
+
+    const getTitle = () => {
+        if (isValidElement(cardTitle?.children)) {
+            return cardTitle?.children;
+        }
+
+        return (<CardTitle {...cardTitle}/>);
     }
-})
+
+    const getSubTitle = () => {
+        if (isValidElement(subTitle?.children)) {
+            return subTitle?.children;
+        }
+
+        return (<CardSubTitle {...subTitle}/>);
+    }
+
+    return (<div {...attrs}>
+        {cardTitle?.children && getTitle()}
+        {subTitle && getSubTitle()}
+        {children}
+    </div>)
+}

@@ -1,22 +1,27 @@
-import {defineComponent, h} from "vue";
-import {makeBoolean, makeTag} from "../../composables/useProps";
+import {CardGroupProps} from "./index";
+import {toClasses} from "../../helpers";
 
-export default defineComponent({
-    name: "CardGroup",
-    props: {
-        tag: makeTag("div"),
-        deck: makeBoolean(false),
-        columns: makeBoolean(false)
-    },
-    setup(props, {slots}) {
-        return () => h(props.tag, {
-            class: [
-                {
-                    "card-group": !props.deck && !props.columns,
-                    "card-deck": props.deck,
-                    "card-columns": props.columns,
-                }
-            ]
-        }, slots?.default?.());
-    }
-});
+export default function CardGroup(
+    {
+        tag = "div",
+        deck = false,
+        columns = false,
+        className,
+        children,
+        ...props
+    }: CardGroupProps
+) {
+    const attrs = {
+        ...props,
+        className: toClasses([
+            className,
+            {
+                "card-group": !deck && !columns,
+                "card-deck": deck,
+                "card-columns": columns,
+            }
+        ])
+    };
+
+    return (<div {...attrs}>{children}</div>)
+}

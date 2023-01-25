@@ -30,6 +30,8 @@ export declare type VariationPlacement =
 export type AspectRatios = '1x1' | '4x3' | '16x9' | '21x9';
 export type ResponsiveNumbers = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 export type ColSizes = ResponsiveNumbers | null | boolean | 'auto';
+export type GutterSizes = 0 | ColSizes;
+
 export type ColAlignments = 'start' | 'center' | 'end';
 export type JustifyContentAlignments = ColAlignments | 'around' | 'between' | 'evenly';
 export type ColOrders = ResponsiveNumbers | 'first' | 'last';
@@ -70,9 +72,8 @@ export type ButtonTypes = "button" | "submit";
 export type ClassTypes = object | string | object[] | string[] | null | undefined;
 export type TagTypes = keyof HTMLElementTagNameMap | string;
 
-// export interface BasicComponent extends HTMLAttributes<any> {
-export interface BasicComponent {
+export interface BasicComponent extends HTMLAttributes<any> {
     children?: any;
-    tag?: keyof HTMLElementTagNameMap | string;
-    className?: string;
+    tag?: TagTypes | null;
+    // className?: string;
 }

@@ -3,7 +3,7 @@ import {
     BasicComponent, ButtonSizes, ClassTypes,
     ColAlignments,
     ColOrders, ColorVariants,
-    ColSizes, ItemAlignment, JustifyAlignment,
+    ColSizes, GutterSizes, ItemAlignment, JustifyAlignment,
     JustifyContentAlignments, Order, ResponsiveNumbers,
     ResponsiveSizes
 } from "../../types";
@@ -163,11 +163,11 @@ export interface RowProps extends BasicComponent {
     alignItems?: ColAlignments | null;
     justifyContent?: JustifyContentAlignments | null;
     //gutter
-    g?: ColSizes;
-    gSm?: ColSizes;
-    gMd?: ColSizes;
-    gLg?: ColSizes;
-    gXl?: ColSizes;
+    g?: GutterSizes;
+    gSm?: GutterSizes;
+    gMd?: GutterSizes;
+    gLg?: GutterSizes;
+    gXl?: GutterSizes;
     //gutters
     gx?: 0 | ResponsiveNumbers | null;
     gy?: 0 | ResponsiveNumbers | null;

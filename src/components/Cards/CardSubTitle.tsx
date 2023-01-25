@@ -3,7 +3,6 @@ import {getBinaryClasses, toClasses} from "../../helpers";
 
 export default function CardSubTitle(
     {
-        title = null,
         tag = "h6",
         textVariant = "muted",
         children,

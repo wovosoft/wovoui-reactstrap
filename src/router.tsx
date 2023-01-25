@@ -3,6 +3,9 @@ import Buttons from "./pages/Buttons";
 import Root from "./root";
 import ListGroups from "./pages/ListGroups";
 import TablePage from "./pages/TablePage";
+import Cards from "./pages/Cards";
+import Alerts from "./pages/Alerts";
+import Badges from "./pages/Badges";
 
 const ErrorPage = <div>Has Error</div>;
 export const routes = [
@@ -11,6 +14,16 @@ export const routes = [
         element: <Root/>,
         errorElement: ErrorPage,
         children: [
+            {
+                path: "/alerts",
+                element: <Alerts/>,
+                errorElement: ErrorPage,
+            },
+            {
+                path: "/badges",
+                element: <Badges/>,
+                errorElement: ErrorPage,
+            },
             {
                 path: "/buttons",
                 element: <Buttons/>,
@@ -24,6 +37,11 @@ export const routes = [
             {
                 path: "/table",
                 element: <TablePage/>,
+                errorElement: ErrorPage,
+            },
+            {
+                path: "/cards",
+                element: <Cards/>,
                 errorElement: ErrorPage,
             },
         ]

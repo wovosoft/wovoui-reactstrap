@@ -4,7 +4,6 @@ import {toClasses} from "../../helpers";
 export default function CardTitle(
     {
         tag = "div",
-        content,
         children,
         ...props
     }: CardTitleProps

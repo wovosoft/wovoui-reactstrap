@@ -33,21 +33,21 @@ export interface BadgeProps extends BasicComponent {
      * Uses Bootstrap supported text-bg-*variant classes
      * @link https://getbootstrap.com/docs/5.2/components/badge/#background-colors
      */
-    variant?: ColorVariants;
+    variant?: ColorVariants | null;
 
     /**
      * Text Color Variants
      * Uses Bootstrap supported text-*variant classes
      * @link https://getbootstrap.com/docs/5.2/utilities/colors/#how-it-works
      */
-    textVariant?: ColorVariants | TextVariants;
+    textVariant?: ColorVariants | TextVariants | null;
 
     /**
      * Background Color Variants
      * Uses Bootstrap Supported bg-*variant classes
      * @link https://getbootstrap.com/docs/5.2/utilities/background/
      */
-    bgVariant?: ColorVariants;
+    bgVariant?: ColorVariants | null;
 
     /**
      * Generates Pill Badges
@@ -59,7 +59,7 @@ export interface BadgeProps extends BasicComponent {
     /**
      * When provided, the badge will be an anchor link
      */
-    href?: string;
+    href?: string | null;
 
     /**
      * Sets position of the badge wrt. its parent,
@@ -67,12 +67,7 @@ export interface BadgeProps extends BasicComponent {
      * @supported 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'
      * @link https://getbootstrap.com/docs/5.2/components/badge/#positioned
      */
-    position?: BadgePositions;
-
-    /**
-     * Default content for default slot
-     */
-    content?: string | number;
+    position?: BadgePositions | null;
 }
 
 export interface FigureProps extends BasicComponent {
@@ -122,7 +117,7 @@ export interface PlaceholderProps extends BasicComponent {
      * @default null
      * @link https://getbootstrap.com/docs/5.2/components/placeholders/#animation
      */
-    animation?: 'glow' | 'wave';
+    animation?: 'glow' | 'wave' | null;
 
     /**
      * @description Defines Placeholder Size
@@ -130,7 +125,7 @@ export interface PlaceholderProps extends BasicComponent {
      * @default null
      * @supported 'lg' | 'sm' | 'xs'
      */
-    size?: PlaceholderSizes;
+    size?: PlaceholderSizes | null;
 
     /**
      * Placeholder width can be set by css utility classes or inline styles
@@ -139,7 +134,7 @@ export interface PlaceholderProps extends BasicComponent {
      * @description Sets placeholder width with bootstrap supported responsive layout sizes
      * @default null
      */
-    col?: ResponsiveNumbers;
+    col?: ResponsiveNumbers | null;
 
     /**
      * @description Sets Background Color Variants
@@ -147,5 +142,5 @@ export interface PlaceholderProps extends BasicComponent {
      * @default null
      * @link https://getbootstrap.com/docs/5.2/components/placeholders/#color
      */
-    variant?: ColorVariants;
+    variant?: ColorVariants | null;
 }
