@@ -1,4 +1,4 @@
-import {HTMLAttributes} from "react";
+import {ClassAttributes, HTMLAttributes} from "react";
 
 export type TextAlign = 'start' | 'center' | 'end';
 export type TextVariants =
@@ -77,3 +77,8 @@ export interface BasicComponent extends HTMLAttributes<any> {
     tag?: TagTypes | null;
     // className?: string;
 }
+
+export type ReactComponentPropSample =
+    JSX.IntrinsicAttributes
+    & ClassAttributes<HTMLDivElement>
+    & HTMLAttributes<HTMLDivElement>;

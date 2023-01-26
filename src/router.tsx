@@ -6,6 +6,8 @@ import TablePage from "./pages/TablePage";
 import Cards from "./pages/Cards";
 import Alerts from "./pages/Alerts";
 import Badges from "./pages/Badges";
+import Breadcrumbs from "./pages/Breadcrumbs";
+import Carousels from "./pages/Carousels";
 
 const ErrorPage = <div>Has Error</div>;
 export const routes = [
@@ -22,6 +24,11 @@ export const routes = [
             {
                 path: "/badges",
                 element: <Badges/>,
+                errorElement: ErrorPage,
+            },
+            {
+                path: "/breadcrumbs",
+                element: <Breadcrumbs/>,
                 errorElement: ErrorPage,
             },
             {
@@ -42,6 +49,11 @@ export const routes = [
             {
                 path: "/cards",
                 element: <Cards/>,
+                errorElement: ErrorPage,
+            },
+            {
+                path: "/carousels",
+                element: <Carousels/>,
                 errorElement: ErrorPage,
             },
         ]

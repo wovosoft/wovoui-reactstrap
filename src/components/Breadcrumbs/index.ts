@@ -9,7 +9,7 @@ export interface BreadcrumbItemProps extends BasicComponent {
     active?: boolean;
     activeClass?: string;
     append?: boolean;
-    ariaCurrent?: string;
+    // ariaCurrent?: string;
     disabled?: boolean;
     exact?: boolean;
     rel?: string;
