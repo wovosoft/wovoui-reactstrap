@@ -1,9 +1,9 @@
-import {CarouselProps} from "./index";
+import {CarouselProps, CarouselStatesType} from "./index";
 import {toClasses} from "../../helpers";
 import CarouselInner from "./CarouselInner";
 import CarouselIndicators from "./CarouselIndicators";
 import CarouselControl from "./CarouselControl";
-import {Children, cloneElement, useState} from "react";
+import {Children, cloneElement, MouseEvent, MouseEventHandler, useState} from "react";
 
 export default function Carousel(
     {
@@ -24,12 +24,7 @@ export default function Carousel(
         ...props
     }: CarouselProps
 ) {
-    //fill with children
-    const [activeItem, setActiveItem] = useState(active);
-    const [slides, setSlides] = useState<{ current: number, old: number | null }>({
-        current: activeItem,
-        old: null
-    });
+
 
     const attrs = {
         ...props,
@@ -44,38 +39,58 @@ export default function Carousel(
         ])
     };
 
-    const changeSlide = (current: number, old: number) => {
-        setActiveItem(current);
-        if (typeof onSlideChange === "function") {
-            onSlideChange(current);
-        }
+    const [currentItem, setCurrentItem] = useState(active);
+    const [targetItem, setTargetItem] = useState<null | number>(null);
+    const [slideDirection, setSlideDirection] = useState<'next' | 'prev' | null>(null);
 
-        setSlides({current, old});
-    }
+    let [timer, setTimer] = useState(0);
+    const toNext: MouseEventHandler<any> = (e) => {
+        e.stopPropagation();
+        if (currentItem < children.length) {
+            const target = currentItem + 1;
+            setTargetItem(target);
+            setSlideDirection("next");
+
+            if (timer) {
+                clearTimeout(timer);
+                setTimer(0);
+            }
+
+            setTimer(setTimeout(() => {
+                setCurrentItem(target);
+                setTargetItem(null);
+            }, 600));
+        }
+    };
+
+    const toPrev: MouseEventHandler<any> = (e) => {
+        e.stopPropagation();
+        if (currentItem > 0) {
+            setTargetItem(currentItem - 1);
+            setSlideDirection("prev");
+
+            if (timer) {
+                clearTimeout(timer);
+                setTimer(0);
+            }
+
+            setTimer(setTimeout(() => {
+                setCurrentItem(currentItem - 1);
+                setTargetItem(null);
+            }, 600));
+        }
+    };
+
+    const toSlide = (e: MouseEvent<HTMLButtonElement>, index: number) => {
+        e.stopPropagation();
+        if (index < children.length && currentItem >= 0) {
+
+        }
+    };
 
     const getControls = () => <>
-        <CarouselControl type='prev' children="Previous" onClick={(e) => {
-            e.stopPropagation();
-            let index = activeItem;
-            if (activeItem > 0) {
-                changeSlide(--index, activeItem);
-            }
-            if (typeof onClickPrev === "function") {
-                onClickPrev(index);
-            }
-        }}/>
-
-        <CarouselControl type='next' children="Next" onClick={(e) => {
-            e.stopPropagation();
-            let index = activeItem;
-            if (activeItem < children.length - 1) {
-                changeSlide(++index, activeItem);
-            }
-
-            if (typeof onClickNext === "function") {
-                onClickNext(index);
-            }
-        }}/>
+        <CarouselControl type='prev' children="Previous" onClick={toPrev}/>
+        <CarouselControl type='next' children="Next" onClick={toNext}/>
     </>
 
 
@@ -84,11 +99,11 @@ export default function Carousel(
             <CarouselIndicators>
                 {Children.map(children, (child, child_index) =>
                     <button
-                        onClick={() => changeSlide(child_index, activeItem)}
+                        onClick={(e) => toSlide(e, child_index)}
                         key={child_index}
                         data-bs-target
                         type="button"
-                        className={toClasses({active: activeItem === child_index})}
+                        className={toClasses({active: currentItem === child_index})}
                         aria-label={"Slide " + (child_index + 1)}>
                     </button>
                 )}
@@ -99,13 +114,16 @@ export default function Carousel(
 
     return (<div {...attrs}>
         <CarouselInner>
+            <div className="position-absolute top-0" style={{zIndex: '9999'}}>{JSON.stringify({
+                currentItem,
+                targetItem
+            })}</div>
             {
                 Children.map(children, (child, index) => cloneElement(child, {
-                    className: child.props.className,
-                    active: index === active,
-                    currentItem: slides.current,
-                    oldItem: slides.old,
                     myIndex: index,
+                    currentItem,
+                    targetItem,
+                    slideDirection
                 }))
             }
             {controlsEnabled && getControls()}

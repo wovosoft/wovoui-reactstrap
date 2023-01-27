@@ -43,5 +43,6 @@ export default function Button(
         ] : [])
     };
 
+    // @ts-ignore
     return <button {...attrs}>{children}</button>;
 }

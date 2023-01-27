@@ -1,5 +1,11 @@
 import {BasicComponent} from "../../types";
 
+export type CarouselStatesType = {
+    current: number;
+    target: null | number;
+    direction: 'next' | 'prev' | null;
+}
+
 export interface CarouselProps extends BasicComponent {
     active?: number;
     slide?: boolean;
@@ -37,8 +43,9 @@ export interface CarouselControlProps extends BasicComponent {
 export interface CarouselItemProps extends BasicComponent {
     active?: boolean;
     activeClass?: string;
-    currentItem?: number | null;
-    oldItem?: number | null;
+    onSlide?: Function,
     myIndex?: number | null;
-    onSlide?: Function
+    currentItem?: number | 0;
+    targetItem?: number | 0;
+    slideDirection?: 'next' | 'prev';
 }
