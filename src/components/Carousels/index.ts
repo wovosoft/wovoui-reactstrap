@@ -13,7 +13,7 @@ export interface CarouselProps extends BasicComponent {
     indicatorsEnabled?: boolean;
     fade?: boolean;
     dark?: boolean;
-    intervals?: boolean;  //in seconds
+    interval?: number|null;  //in seconds
     direction?: 'next' | 'prev';
     onClickNext?: ((index: number) => any) | null,
     onClickPrev?: ((index: number) => any) | null,
@@ -41,11 +41,6 @@ export interface CarouselControlProps extends BasicComponent {
 }
 
 export interface CarouselItemProps extends BasicComponent {
-    active?: boolean;
-    activeClass?: string;
     onSlide?: Function,
     myIndex?: number | null;
-    currentItem?: number | 0;
-    targetItem?: number | 0;
-    slideDirection?: 'next' | 'prev';
 }

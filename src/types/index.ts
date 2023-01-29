@@ -72,7 +72,7 @@ export type ButtonTypes = "button" | "submit";
 export type ClassTypes = object | string | object[] | string[] | null | undefined;
 export type TagTypes = keyof HTMLElementTagNameMap | string;
 
-export interface BasicComponent extends HTMLAttributes<any>, BasicFields {
+export interface BasicComponent extends HTMLAttributes<any> {
     children?: any;
     tag?: TagTypes | null;
     // className?: string;

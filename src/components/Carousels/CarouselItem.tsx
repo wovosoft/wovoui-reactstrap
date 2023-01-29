@@ -1,30 +1,26 @@
 import {CarouselItemProps} from "./index";
 import {toClasses} from "../../helpers";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
+import {CarouselContext} from "./Carousel";
 
 export default function CarouselItem(
     {
         tag = "div",
-        active = false,
-        activeClass = "active",
         myIndex,
         className,
         onSlide,
-        currentItem,
-        targetItem,
-        slideDirection,
         ...props
-    }: CarouselItemProps
+    }: CarouselItemProps,
 ) {
+    const carousel = useContext(CarouselContext);
+    const [isActive, setIsActive] = useState(carousel.currentItem === myIndex);
 
-    const [isActive, setIsActive] = useState(currentItem === myIndex);
-    const [transitionalClasses, setTransitionalClasses] = useState({
+    const [transition, setTransition] = useState({
         direction: false,
-        transition: false
+        begin: false
     });
 
-    const isToNext = () => slideDirection === "next";
-    const isToPrev = () => slideDirection === "prev";
+    const isToNext = () => carousel.slideDirection === "next";
 
     const attrs = {
         ...props,
@@ -32,9 +28,9 @@ export default function CarouselItem(
             className,
             "carousel-item",
             {
-                "active": isActive,
-                [`carousel-item-${isToNext() ? 'start' : 'end'}`]: transitionalClasses.transition,
-                [`carousel-item-${slideDirection}`]: myIndex === targetItem
+                active: isActive,
+                [`carousel-item-${isToNext() ? 'start' : 'end'}`]: transition.begin,
+                [`carousel-item-${carousel.slideDirection}`]: transition.direction
             }
         ])
     };
@@ -51,27 +47,60 @@ export default function CarouselItem(
      * active class is moved to next from prev
      */
 
+    const startTimer = useRef<number | null>(null);
 
-    useEffect(() => {
-        if ((myIndex === currentItem || myIndex === targetItem) && targetItem) {
-            setTransitionalClasses({
-                ...transitionalClasses,
-                transition: true
-            });
+    function start() {
+        if (carousel.targetItem === myIndex) {
+            setTransition(transition => ({
+                ...transition,
+                direction: true
+            }));
         }
 
-        const timer = setTimeout(() => {
-            setIsActive(currentItem === myIndex);
+        if (startTimer.current) {
+            clearTimeout(startTimer.current);
+            startTimer.current = null;
+        }
 
-            setTransitionalClasses({
-                ...transitionalClasses,
-                transition: false
-            });
-        }, 600);
+        /**
+         * This should be rendered on next render.
+         * After directional classes 'carousel-item-{next|prev}' is added,
+         * then 'carousel-item-{start|end}' should be added
+         * TODO: I didn't find a good solution yet.
+         * So implementing with 10ms delay, which works.
+         * But this is not a solution
+         */
+        startTimer.current = setTimeout(() => {
+            if (carousel.currentItem === myIndex || carousel.targetItem === myIndex) {
+                setTransition(transition => ({
+                    ...transition,
+                    begin: true
+                }));
+            }
+        }, 10);
+    }
 
-        return () => clearTimeout(timer);
-    }, [targetItem]);
+    function end() {
+        setIsActive(myIndex === carousel.currentItem);
+        setTransition(transition => ({
+            ...transition,
+            begin: false,
+            direction: false
+        }));
+    }
 
+    function animate() {
+        if (typeof carousel.targetItem === "number") {
+            if (carousel.currentItem !== carousel.targetItem) {
+                start();
+            } else if (carousel.currentItem === carousel.targetItem) {
+                end();
+            }
+        }
+    }
+
+
+    useEffect(animate, [carousel.currentItem, carousel.targetItem])
 
     return (<div {...attrs}/>)
 }

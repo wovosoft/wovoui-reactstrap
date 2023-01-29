@@ -8,21 +8,21 @@ export function toClasses(classes: any): string {
         return classes.toString().trim();
     }
 
-    let out = [];
+    let out = new Set();
     //when plain object
     if (!Array.isArray(classes) && typeof classes === "object") {
         for (let key of Object.keys(classes)) {
             if (classes[key]) {
-                out.push(key.trim());
+                out.add(key.trim());
             }
         }
     } else if (Array.isArray(classes)) {
         for (let x in classes) {
-            out.push(toClasses(classes[x]))
+            out.add(toClasses(classes[x]))
         }
     }
     //removes duplicate
-    return Array.from(new Set(out)).filter(i => !!i).join(" ");
+    return Array.from(out).filter(i => !!i).join(" ");
 }
 
 export function withDefaults<T>(defaults: T): T {

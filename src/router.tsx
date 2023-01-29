@@ -8,6 +8,7 @@ import Alerts from "./pages/Alerts";
 import Badges from "./pages/Badges";
 import Breadcrumbs from "./pages/Breadcrumbs";
 import Carousels from "./pages/Carousels";
+import Forms from "./pages/Forms";
 
 const ErrorPage = <div>Has Error</div>;
 export const routes = [
@@ -19,42 +20,39 @@ export const routes = [
             {
                 path: "/alerts",
                 element: <Alerts/>,
-                errorElement: ErrorPage,
             },
             {
                 path: "/badges",
                 element: <Badges/>,
-                errorElement: ErrorPage,
             },
             {
                 path: "/breadcrumbs",
                 element: <Breadcrumbs/>,
-                errorElement: ErrorPage,
             },
             {
                 path: "/buttons",
                 element: <Buttons/>,
-                errorElement: ErrorPage,
-            },
-            {
-                path: "/list-groups",
-                element: <ListGroups/>,
-                errorElement: ErrorPage,
-            },
-            {
-                path: "/table",
-                element: <TablePage/>,
-                errorElement: ErrorPage,
             },
             {
                 path: "/cards",
                 element: <Cards/>,
-                errorElement: ErrorPage,
             },
             {
                 path: "/carousels",
                 element: <Carousels/>,
-                errorElement: ErrorPage,
+            },
+            {
+                path: "/forms",
+                element: <Forms/>,
+            },
+
+            {
+                path: "/list-groups",
+                element: <ListGroups/>,
+            },
+            {
+                path: "/table",
+                element: <TablePage/>,
             },
         ]
     },

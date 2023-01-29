@@ -6,6 +6,7 @@ import {
     HTMLInputTypes,
     ResponsiveNumbers, TagTypes, TextAlign
 } from "../../types";
+import {HTMLInputTypeAttribute, InputHTMLAttributes, LabelHTMLAttributes} from "react";
 
 export interface CalendarProps extends BasicComponent {
     format?: string;
@@ -42,7 +43,6 @@ export interface DatepickerProps extends BasicComponent {
 
 export interface FeedbackProps extends BasicComponent {
     type?: FeedbackTypes;
-    message?: string;
 }
 
 export interface FormGroupProps extends BasicComponent {
@@ -64,7 +64,7 @@ export interface FormGroupProps extends BasicComponent {
     invalidFeedback?: string;
 }
 
-export interface FormLabelProps extends BasicComponent {
+export interface FormLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
     horizontal?: boolean;
     sm?: ResponsiveNumbers;
     md?: ResponsiveNumbers;
@@ -72,17 +72,20 @@ export interface FormLabelProps extends BasicComponent {
     xl?: ResponsiveNumbers;
 }
 
-export interface InputProps extends BasicComponent {
-    type?: HTMLInputTypes;
-    size?: ButtonSizes;
+
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+    /**
+     * size is already in input element
+     */
+    controlSize?: ButtonSizes | null;
     plain?: boolean;
-    state?: boolean;
+    state?: boolean | null;
 }
 
 export interface InputGroupProps extends BasicComponent {
     size?: ButtonSizes;
-    prepend?: string;
-    append?: string;
+    prepend?: any;
+    append?: any;
     noWrap?: boolean;
 }
 
@@ -103,15 +106,17 @@ export interface MultiselectProps extends BasicComponent {
 export interface RadioProps extends BasicComponent {
     name?: string;
     id?: string;
-    value?: any;
     wrapperAttrs?: any;
     labelAttrs?: any;
+    defaultChecked?: boolean;
 }
 
-export interface RangeProps extends BasicComponent {
-    min?: number;
-    max?: number;
-    step?: number;
+export interface RadioGroupProps extends BasicComponent {
+    options: any[],
+}
+
+export interface RangeProps extends InputHTMLAttributes<HTMLInputElement> {
+
 }
 
 export interface RatingProps extends RangeProps {
@@ -119,6 +124,8 @@ export interface RatingProps extends RangeProps {
 }
 
 export interface SelectProps extends BasicComponent {
+    firstItem?: any;
+    lastItem?: any;
     multiple?: boolean;
     size?: ButtonSizes;
     options?: any[];
@@ -128,7 +135,11 @@ export interface SelectProps extends BasicComponent {
     labelField?: string;
 }
 
-export interface SpinButtonProps extends RangeProps {
+export interface SpinButtonProps extends BasicComponent {
+    min?: number;
+    max?: number;
+    step?: number;
+    value?: number;
     buttonVariant?: ColorVariants;
     size?: ButtonSizes;
     formatter?: Function;

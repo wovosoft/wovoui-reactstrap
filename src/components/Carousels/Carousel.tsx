@@ -1,9 +1,21 @@
-import {CarouselProps, CarouselStatesType} from "./index";
+import {CarouselProps} from "./index";
 import {toClasses} from "../../helpers";
 import CarouselInner from "./CarouselInner";
 import CarouselIndicators from "./CarouselIndicators";
 import CarouselControl from "./CarouselControl";
-import {Children, cloneElement, MouseEvent, MouseEventHandler, useState} from "react";
+import {Children, cloneElement, MouseEvent, MouseEventHandler, useRef, useState, createContext, useEffect} from "react";
+
+export const CarouselContext = createContext<{
+    currentItem?: number | null,
+    targetItem?: number | null,
+    slideDirection?: 'next' | 'prev' | null
+}>({
+    currentItem: null,
+    targetItem: null,
+    slideDirection: null
+});
+
+const ANIMATION_TIME = 600;
 
 export default function Carousel(
     {
@@ -13,7 +25,7 @@ export default function Carousel(
         indicatorsEnabled = true,
         fade = false,
         dark = fade,
-        intervals = false,
+        interval = 5,
         direction = "next",
         className,
         children,
@@ -43,56 +55,63 @@ export default function Carousel(
     const [targetItem, setTargetItem] = useState<null | number>(null);
     const [slideDirection, setSlideDirection] = useState<'next' | 'prev' | null>(null);
 
-    let [timer, setTimer] = useState(0);
-    const toNext: MouseEventHandler<any> = (e) => {
-        e.stopPropagation();
-        if (currentItem < children.length) {
-            const target = currentItem + 1;
+    const isLast = () => currentItem === (children.length - 1);
+
+    let timer = useRef(0);
+    const toNext: MouseEventHandler<any> = (e?: MouseEvent<any> | null) => {
+        toSlide(
+            e,
+            isLast() ? 0 : currentItem + 1,
+            isLast() ? 'next' : null
+        );
+    };
+
+    const toPrev: MouseEventHandler<any> = (e?: MouseEvent<any> | null) => {
+        toSlide(
+            e,
+            currentItem === 0 ? children.length - 1 : currentItem - 1,
+            currentItem === 0 ? 'prev' : null
+        );
+    };
+
+    // @ts-ignore
+    const toSlide = (e?: MouseEvent<any> | null, target: number, direction?: 'next' | 'prev' | null) => {
+        if (e) {
+            e.stopPropagation();
+        }
+
+        if (target === currentItem) {
+            return;
+        }
+
+        if (target < children.length && currentItem >= 0) {
             setTargetItem(target);
-            setSlideDirection("next");
-
-            if (timer) {
-                clearTimeout(timer);
-                setTimer(0);
+            if (direction) {
+                setSlideDirection(direction);
+            } else {
+                if (target > currentItem) {
+                    setSlideDirection("next");
+                } else {
+                    setSlideDirection("prev");
+                }
             }
 
-            setTimer(setTimeout(() => {
+            if (timer) {
+                clearTimeout(timer.current);
+                timer.current = 0;
+            }
+
+            timer.current = setTimeout(() => {
                 setCurrentItem(target);
-                setTargetItem(null);
-            }, 600));
+                // setTargetItem(null);
+            }, ANIMATION_TIME);
         }
     };
 
-    const toPrev: MouseEventHandler<any> = (e) => {
-        e.stopPropagation();
-        if (currentItem > 0) {
-            setTargetItem(currentItem - 1);
-            setSlideDirection("prev");
-
-            if (timer) {
-                clearTimeout(timer);
-                setTimer(0);
-            }
-
-            setTimer(setTimeout(() => {
-                setCurrentItem(currentItem - 1);
-                setTargetItem(null);
-            }, 600));
-        }
-    };
-
-    const toSlide = (e: MouseEvent<HTMLButtonElement>, index: number) => {
-        e.stopPropagation();
-        if (index < children.length && currentItem >= 0) {
-
-        }
-    };
-
-    const getControls = () => <>
+    const getControls = () => (<>
         <CarouselControl type='prev' children="Previous" onClick={toPrev}/>
         <CarouselControl type='next' children="Next" onClick={toNext}/>
-    </>
-
+    </>);
 
     const getCarouselIndicators = () => {
         return (
@@ -111,21 +130,37 @@ export default function Carousel(
         )
     }
 
+    //looping
+    // const intervalTimer = useRef<number | null>();
+    // const clearIntervalTimer = () => intervalTimer.current && clearInterval(intervalTimer.current);
+    // const setIntervalTimer = () => {
+    //     clearIntervalTimer();
+    //
+    //     if (interval) {
+    //         intervalTimer.current = setInterval(() => {
+    //             // @ts-ignore
+    //             toNext();
+    //         }, interval * 1000);
+    //     }
+    // }
+    //
+    // useEffect(() => {
+    //     setIntervalTimer();
+    // }, [interval]);
 
     return (<div {...attrs}>
         <CarouselInner>
-            <div className="position-absolute top-0" style={{zIndex: '9999'}}>{JSON.stringify({
-                currentItem,
-                targetItem
-            })}</div>
-            {
-                Children.map(children, (child, index) => cloneElement(child, {
-                    myIndex: index,
-                    currentItem,
-                    targetItem,
-                    slideDirection
-                }))
-            }
+            <CarouselContext.Provider value={{
+                currentItem: currentItem,
+                targetItem: targetItem,
+                slideDirection: slideDirection
+            }}>
+                {
+                    Children.map(children, (child, index) => cloneElement(child, {
+                        myIndex: index,
+                    }))
+                }
+            </CarouselContext.Provider>
             {controlsEnabled && getControls()}
             {indicatorsEnabled && getCarouselIndicators()}
         </CarouselInner>
