@@ -1,0 +1,26 @@
+.wui-tags {
+  //.wui-tags-items {
+  //    list-style-type: none;
+  //
+  //    li {
+  //        display: inline-block;
+  //        float: left;
+  //    }
+  //}
+  border: 1px solid var(--bs-gray-200);
+
+  &:focus {
+    box-shadow: 0 0 6px #007bff !important;
+    border-radius: 4px !important;
+  }
+
+  .wui-tags-input {
+    border: 0;
+    outline: 0;
+  }
+
+  .hover\:bg-bright:hover {
+    background: var(--bs-dark);
+    cursor: pointer;
+  }
+}

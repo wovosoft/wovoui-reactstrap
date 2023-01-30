@@ -6,6 +6,7 @@ import {
     DropdownAlignments,
     DropdownDirections, TagTypes
 } from "../../types";
+import {ButtonHTMLAttributes} from "react";
 
 export interface DropdownProps extends BasicComponent {
     menuTag?: keyof HTMLElementTagNameMap,
@@ -19,7 +20,7 @@ export interface DropdownProps extends BasicComponent {
     /**
      * left,right,up, down=null (default)
      */
-    dir?: DropdownDirections | null,
+    direction?: DropdownDirections | null,
     align?: DropdownAlignments,
     menuDark?: boolean,
     menuClass?: ClassTypes;
@@ -29,9 +30,8 @@ export interface DropdownProps extends BasicComponent {
     disableInnerClicks?: boolean,
 }
 
-export interface DropdownButtonProps extends BasicComponent {
+export interface DropdownButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     active?: boolean;
-    disabled?: boolean;
 }
 
 export interface DropdownDividerProps {

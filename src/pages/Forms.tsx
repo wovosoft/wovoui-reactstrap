@@ -7,6 +7,9 @@ import Select from "../components/Forms/Select";
 import SpinButton from "../components/Forms/SpinButton";
 import Radio from "../components/Forms/Radio";
 import RadioGroup from "../components/Forms/RadioGroup";
+import Tags from "../components/Forms/Tags";
+import Checkbox from "../components/Forms/Checkbox";
+import CheckboxGroup from "../components/Forms/CheckboxGroup";
 
 export default function Forms() {
     // @ts-ignore
@@ -96,7 +99,22 @@ export default function Forms() {
             </Radio>
             <h4>Radio Group</h4>
             <RadioGroup options={radioOptions}></RadioGroup>
+        </Card>
 
+        <Card className="mt-3" header="Form Tags">
+            <Tags></Tags>
+        </Card>
+        <Card className="mt-3" header="Checkboxes">
+            <h4>Plain Checkboxes</h4>
+            <Checkbox>One</Checkbox>
+            <Checkbox>Two</Checkbox>
+            <Checkbox>Three</Checkbox>
+            <Checkbox>Four</Checkbox>
+
+            <h4>Checkbox Group</h4>
+            <CheckboxGroup valueField="value" textField="label" options={radioOptions}>
+
+            </CheckboxGroup>
         </Card>
     </>)
 }

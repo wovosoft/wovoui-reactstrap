@@ -15,14 +15,12 @@ export interface CalendarProps extends BasicComponent {
     activeClass?: string;
 }
 
-export interface CheckboxProps extends BasicComponent {
-    switch?: boolean;
+export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
+    isSwitch?: boolean; //switch not allowed in reactjs, its reserved keyword
     button?: boolean;
     inline?: boolean;
     reverse?: boolean;
     disabled?: boolean;
-    value?: boolean | any;
-    uncheckedValue?: boolean | any;
     id?: string;
     checkBy?: Function
 }
@@ -32,7 +30,7 @@ export interface CheckboxGroupProps extends BasicComponent {
     textField?: string;
     valueField?: string;
     inline?: boolean;
-    switch?: boolean;
+    isSwitch?: boolean;
     reverse?: boolean;
 }
 
