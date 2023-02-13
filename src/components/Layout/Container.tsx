@@ -12,11 +12,14 @@ export default function Container(
 ) {
     const attrs = {
         ...props,
-        className: toClasses([props.className, {
-            "container": !(fluid || size),
-            "container-fluid": fluid && !size,
-            ["container-" + size]: size && !fluid
-        }])
+        className: toClasses([
+            props.className,
+            {
+                "container": !(fluid || size),
+                "container-fluid": fluid && !size,
+                ["container-" + size]: size && !fluid
+            }
+        ])
     };
 
     return <div {...attrs}>{children}</div>;

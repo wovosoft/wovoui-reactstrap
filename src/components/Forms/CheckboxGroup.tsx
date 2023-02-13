@@ -1,21 +1,3 @@
-/*
-<template>
-    <div role="group">
-        <Checkbox
-            v-for="(option,option_key) in options"
-            :key="option_key"
-            :inline="inline"
-            :switch="$props.switch"
-            :reverse="reverse"
-            :disabled="option.disabled===true"
-            @update:modelValue="v=>$emit('update:modelValue',v)"
-            :value="valueField?option[valueField]:option">
-            {{ textField ? option[textField] : option }}
-        </Checkbox>
-    </div>
-</template>
- */
-
 import {CheckboxGroupProps} from "./index";
 import Checkbox from "./Checkbox";
 import {Key} from "react";

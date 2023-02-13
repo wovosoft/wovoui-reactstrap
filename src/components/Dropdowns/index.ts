@@ -7,6 +7,7 @@ import {
     DropdownDirections, TagTypes
 } from "../../types";
 import {ButtonHTMLAttributes} from "react";
+import * as PopperJS from "@popperjs/core";
 
 export interface DropdownProps extends BasicComponent {
     menuTag?: keyof HTMLElementTagNameMap,
@@ -20,7 +21,7 @@ export interface DropdownProps extends BasicComponent {
     /**
      * left,right,up, down=null (default)
      */
-    direction?: DropdownDirections | null,
+    direction?: PopperJS.Placement;
     align?: DropdownAlignments,
     menuDark?: boolean,
     menuClass?: ClassTypes;

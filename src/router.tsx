@@ -9,6 +9,7 @@ import Badges from "./pages/Badges";
 import Breadcrumbs from "./pages/Breadcrumbs";
 import Carousels from "./pages/Carousels";
 import Forms from "./pages/Forms";
+import Dropdowns from "./pages/Dropdowns";
 
 const ErrorPage = <div>Has Error</div>;
 export const routes = [
@@ -40,6 +41,10 @@ export const routes = [
             {
                 path: "/carousels",
                 element: <Carousels/>,
+            },
+            {
+                path: "/dropdowns",
+                element: <Dropdowns/>,
             },
             {
                 path: "/forms",

@@ -4,10 +4,11 @@ import {toClasses} from "../../helpers";
 export default function ListGroup(
     {
         tag = "ul",
-        flush = false,
-        numbered = false,
-        horizontal = false,
-        children = null,
+        flush,
+        numbered,
+        horizontal,
+        children,
+        className,
         ...props
     }: ListGroupProps
 ) {
@@ -15,7 +16,7 @@ export default function ListGroup(
     const attrs = {
         ...props,
         className: toClasses([
-            props.className,
+            className,
             "list-group",
             {
                 "list-group-flush": flush,

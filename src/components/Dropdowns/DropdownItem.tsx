@@ -47,8 +47,8 @@ export default function (
         )
     }
     return (
-        <div role="presentation">
+        <li role="presentation">
             {getLink()}
-        </div>
+        </li>
     );
 }

@@ -1,7 +1,8 @@
 import {toClasses} from "../../helpers";
 import {ButtonProps} from "./index";
+import {forwardRef} from "react";
 
-export default function Button(
+export default forwardRef(function Button(
     {
         tag = "button",
         href = null,
@@ -22,7 +23,7 @@ export default function Button(
         className,
         children,
         ...props
-    }: ButtonProps
+    }: ButtonProps, ref
 ) {
     let attrs = {
         ...props,
@@ -43,6 +44,7 @@ export default function Button(
         ] : [])
     };
 
+
     // @ts-ignore
-    return <button {...attrs}>{children}</button>;
-}
+    return <button ref={ref} {...attrs}>{children}</button>;
+})

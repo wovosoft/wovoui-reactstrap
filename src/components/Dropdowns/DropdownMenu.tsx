@@ -1,7 +1,8 @@
 import {DropdownMenuProps} from "./index";
 import {toClasses} from "../../helpers";
+import {ForwardedRef, forwardRef} from "react";
 
-export default function (
+export default forwardRef(function (
     {
         tag = "ul",
         dark,
@@ -9,7 +10,8 @@ export default function (
         children,
         className,
         ...props
-    }: DropdownMenuProps
+    }: DropdownMenuProps,
+    ref: ForwardedRef<HTMLUListElement>
 ) {
     const attrs = {
         ...props,
@@ -24,8 +26,8 @@ export default function (
     };
 
     return (
-        <div {...attrs}>
+        <ul {...attrs} ref={ref}>
             {children}
-        </div>
+        </ul>
     )
-}
+})

@@ -19,6 +19,7 @@ export default function Col(
         gx = null,
         gy = null,
         children = null,
+        className,
         ...props
     }: ColProps
 ) {
@@ -26,6 +27,7 @@ export default function Col(
     const attrs = {
         ...props,
         className: toClasses([
+            className,
             {
                 "col": !(sm || md || lg || xl || col),
                 ["col-" + col]: col,
