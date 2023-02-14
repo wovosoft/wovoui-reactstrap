@@ -73,7 +73,7 @@ export type ClassTypes = object | string | object[] | string[] | null | undefine
 export type TagTypes = keyof HTMLElementTagNameMap | string;
 
 export interface BasicComponent extends HTMLAttributes<HTMLElement> {
-    tag?: TagTypes | null;
+    tag?: TagTypes;
 }
 
 export type ReactComponentPropSample =

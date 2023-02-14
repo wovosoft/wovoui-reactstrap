@@ -4,26 +4,25 @@ import {toClasses, isBoolean} from "../../helpers";
 export default function Col(
     {
         tag = "div",
-        col = null,
-        sm = null,
-        md = null,
-        lg = null,
-        xl = null,
-        alignSelf = null,
-        justifyContent = null,
-        order = null,
-        offsetSm = null,
-        offsetMd = null,
-        offsetLg = null,
-        offsetXl = null,
-        gx = null,
-        gy = null,
-        children = null,
+        col,
+        sm,
+        md,
+        lg,
+        xl,
+        alignSelf,
+        justifyContent,
+        order,
+        offsetSm,
+        offsetMd,
+        offsetLg,
+        offsetXl,
+        gx,
+        gy,
+        children,
         className,
         ...props
     }: ColProps
 ) {
-
     const attrs = {
         ...props,
         className: toClasses([
@@ -52,5 +51,5 @@ export default function Col(
         ])
     }
 
-    return <div {...attrs}>{children}</div>;
+    return (<div {...attrs}>{children}</div>);
 }

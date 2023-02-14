@@ -7,7 +7,6 @@ import {
     JustifyContentAlignments, Order, ResponsiveNumbers,
     ResponsiveSizes
 } from "../../types";
-import {HTMLAttributes} from "react";
 
 export interface ColProps extends BasicComponent {
     col?: ColSizes;

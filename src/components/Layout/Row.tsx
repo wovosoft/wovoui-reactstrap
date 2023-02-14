@@ -28,7 +28,8 @@ export default function Row(
         ...props,
         className: toClasses([
             "row",
-            className, {
+            className,
+            {
                 ["row-cols-" + cols]: cols,
                 ["row-cols-sm-" + sm]: sm,
                 ["row-cols-md-" + md]: md,
@@ -45,7 +46,7 @@ export default function Row(
                 ["gy-" + gy]: gy,
             }
         ])
-    }
+    };
 
-    return <div {...attrs}>{children}</div>;
+    return (<div {...attrs}>{children}</div>);
 }

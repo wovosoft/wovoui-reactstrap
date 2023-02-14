@@ -11,6 +11,7 @@ export default function ListGroupItem(
         button = false,
         variant = null,
         children = null,
+        className,
         ...props
     }: ListGroupItemProps
 ) {
@@ -21,7 +22,7 @@ export default function ListGroupItem(
         href: href,
         to: to,
         className: toClasses([
-            props.className,
+            className,
             "list-group-item",
             {
                 "active": active,
@@ -30,7 +31,9 @@ export default function ListGroupItem(
                 ["list-group-item-" + variant]: !!variant
             }
         ]),
-    }
+    };
 
-    return <li {...attrs}>{children}</li>
+    const Tag = tag;
+
+    return <Tag {...attrs}>{children}</Tag>
 }

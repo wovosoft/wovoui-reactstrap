@@ -26,5 +26,7 @@ export default function ListGroup(
         ])
     };
 
-    return <ul {...attrs}>{children}</ul>;
+    const Tag = tag;
+
+    return (<Tag {...attrs}>{children}</Tag>);
 }

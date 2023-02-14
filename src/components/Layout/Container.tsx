@@ -5,15 +5,16 @@ export default function Container(
     {
         tag = "div",
         fluid = false,
-        size = null,
-        children = null,
+        size,
+        children,
+        className,
         ...props
     }: ContainerProps
 ) {
     const attrs = {
         ...props,
         className: toClasses([
-            props.className,
+            className,
             {
                 "container": !(fluid || size),
                 "container-fluid": fluid && !size,
@@ -22,5 +23,5 @@ export default function Container(
         ])
     };
 
-    return <div {...attrs}>{children}</div>;
+    return (<div {...attrs}>{children}</div>);
 }

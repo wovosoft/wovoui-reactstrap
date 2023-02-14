@@ -7,7 +7,8 @@ import {
     ModalSizes,
     TagTypes
 } from "../../types";
-import {AllHTMLAttributes, HTMLAttributes} from "react";
+
+import {AllHTMLAttributes} from "react";
 import {ButtonCloseProps, ButtonProps} from "../Button";
 
 export interface ModalProps extends BasicComponent {
@@ -52,7 +53,7 @@ export interface ModalProps extends BasicComponent {
     noCloseOnBackdrop?: boolean;
     noCloseOnEsc?: boolean;
 
-    static?: boolean;
+    staticModal?: boolean;
     noBackdrop?: boolean;
     buttonSize?: ButtonSizes;
 
@@ -84,6 +85,6 @@ export interface ModalHeaderProps extends BasicComponent {
     shrink?: boolean;
 }
 
-export interface ModalTitleProps extends BasicComponent{
+export interface ModalTitleProps extends BasicComponent {
 
 }
