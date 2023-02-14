@@ -34,7 +34,16 @@ export default function Dropdowns() {
                     ))
                 }
             </Row>
-
+           <div style={{height:'500px'}}>
+               <Dropdown text="Default Dropdown">
+                   <DropdownItem>Hello</DropdownItem>
+                   <DropdownItem>World!</DropdownItem>
+                   <DropdownItem>Porting</DropdownItem>
+                   <DropdownItem>wovoui</DropdownItem>
+                   <DropdownItem>to</DropdownItem>
+                   <DropdownItem>reactjs</DropdownItem>
+               </Dropdown>
+           </div>
         </Container>
     )
 }

@@ -9,6 +9,7 @@ export default forwardRef(function (
         show,
         children,
         className,
+        placement,
         ...props
     }: DropdownMenuProps,
     ref: ForwardedRef<HTMLUListElement>
@@ -26,7 +27,7 @@ export default forwardRef(function (
     };
 
     return (
-        <ul {...attrs} ref={ref}>
+        <ul {...attrs} ref={ref} data-popper-placement={placement}>
             {children}
         </ul>
     )

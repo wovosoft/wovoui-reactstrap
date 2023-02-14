@@ -8,6 +8,7 @@ import {
 } from "../../types";
 import {ButtonHTMLAttributes} from "react";
 import * as PopperJS from "@popperjs/core";
+import {Placement} from "@popperjs/core";
 
 export interface DropdownProps extends BasicComponent {
     menuTag?: keyof HTMLElementTagNameMap,
@@ -63,4 +64,5 @@ export interface DropdownItemProps extends BasicComponent {
 export interface DropdownMenuProps extends BasicComponent {
     dark?: boolean;
     show?: boolean;
+    placement?: Placement;
 }

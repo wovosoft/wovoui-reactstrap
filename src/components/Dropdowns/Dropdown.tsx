@@ -2,7 +2,7 @@ import {DropdownProps} from "./index";
 import {toClasses} from "../../helpers";
 import Button from "../Button/Button";
 import DropdownMenu from "./DropdownMenu";
-import {useState} from "react";
+import {Ref, useState} from "react";
 import useClickOutside from "../../composables/useClickOutside";
 import {Manager, Popper, Reference} from "react-popper";
 
@@ -50,93 +50,78 @@ export default function Dropdown(
         () => setIsMenuOpened(false)
     );
 
-    const [modifiers, setModifiers] = useState([
+    const modifiers = [
         {
             name: 'offset',
             options: {
                 offset: [0, 2],
             },
         },
-        {
-            name: 'preventOverflow',
-        },
-        {
-            name: 'flip',
-            options: {
-                altBoundary: true,
-                rootBoundary: 'viewport'
-            },
+    ];
 
-        },
-    ]);
-
-    //don't know why, this fixes initial position of the popper
-    const onFirstUpdate = (r: any) => {
-        // console.log(r)
+    const getRef = (ref: Ref<any>) => {
+        if (isNav) {
+            return <Button
+                data-bs-toggle="dropdown"
+                ref={ref}
+                onClick={toggleMenu}
+                className="dropdown-toggle"
+                role="button">
+                {text}
+            </Button>
+        }
+        return <Button
+            ref={ref}
+            onClick={toggleMenu}
+            tag={toggleTag}
+            block={block}
+            disabled={disabled}
+            variant={variant}
+            size={size}
+            className={toClasses({
+                'show': isMenuOpened,
+                'dropdown-toggle-split': split,
+                'dropdown-toggle': true
+            })}
+            aria-expanded={isMenuOpened}>
+            {text}
+        </Button>;
     }
-    return (
-        <Manager>
-            <div {...attrs} ref={dd}>
-                <Reference>
-                    {
-                        ({ref}) => (
-                            <>
-                                {
-                                    split && <Button
-                                        disabled={disabled}
-                                        variant={splitVariant}
-                                        block={block}
-                                        size={size}>
-                                        {text}
-                                    </Button>
-                                }
 
-                                {
-                                    isNav ? <Button
-                                        ref={ref}
-                                        onClick={toggleMenu}
-                                        className="dropdown-toggle"
-                                        role="button">
-                                        {text}
-                                    </Button> : <Button
-                                        ref={ref}
-                                        onClick={toggleMenu}
-                                        tag={toggleTag}
-                                        block={block}
-                                        disabled={disabled}
-                                        variant={variant}
-                                        size={size}
-                                        className={toClasses({
-                                            'show': isMenuOpened,
-                                            'dropdown-toggle-split': split,
-                                            'dropdown-toggle': true
-                                        })}
-                                        aria-expanded={isMenuOpened}>
-                                        {text}
-                                    </Button>
-                                }
-                            </>
-                        )
-                    }
+    const [placementNew, setPlacement] = useState(direction);
+
+    return (
+        <div {...attrs} ref={dd}>
+            {
+                split && <Button
+                    disabled={disabled}
+                    variant={splitVariant}
+                    block={block}
+                    size={size}>
+                    {text}
+                </Button>
+            }
+            <Manager>
+                <Reference>
+                    {({ref}) => getRef(ref)}
                 </Reference>
-                <Popper placement={direction || 'bottom'}
+                <Popper placement={direction}
                         modifiers={modifiers}
-                        onFirstUpdate={onFirstUpdate}>
-                    {
-                        ({ref, placement, style}) => (
-                            <DropdownMenu
-                                data-popper-placement={placement}
-                                ref={ref}
-                                dark={menuDark}
-                                style={style}
-                                show={isMenuOpened}>
-                                {children}
-                            </DropdownMenu>
-                        )
-                    }
+                        onFirstUpdate={() => null}
+                        strategy="fixed">
+                    {({ref, style, placement}) => (
+                        <DropdownMenu
+                            placement={placementNew}
+                            ref={ref}
+                            dark={menuDark}
+                            style={style}
+                            show={isMenuOpened}>
+                            {children}
+                        </DropdownMenu>
+                    )}
                 </Popper>
-            </div>
-        </Manager>
+            </Manager>
+        </div>
     );
 };
 
